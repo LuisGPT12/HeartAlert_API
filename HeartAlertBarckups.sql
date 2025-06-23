@@ -21,7 +21,7 @@ USE `heartalertdb`;
 
 -- Volcando estructura para tabla heartalertdb.alertas
 CREATE TABLE IF NOT EXISTS `alertas` (
-  `ID_Alerta` int(11) NOT NULL,
+  `ID_Alerta` int(11) NOT NULL AUTO_INCREMENT,
   `COD_Lectura` int(11) NOT NULL,
   `COD_Paciente` int(11) NOT NULL,
   `tipo_alerta` varchar(15) NOT NULL,
@@ -37,19 +37,26 @@ CREATE TABLE IF NOT EXISTS `alertas` (
 
 -- Volcando estructura para tabla heartalertdb.doctor
 CREATE TABLE IF NOT EXISTS `doctor` (
-  `ID_Doctor` int(11) NOT NULL,
+  `ID_Doctor` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_doctor` varchar(20) NOT NULL,
   `apellido_doctor` varchar(20) NOT NULL,
   `especialidad` varchar(50) NOT NULL,
   `Verificacion_ID` varchar(6) NOT NULL,
   PRIMARY KEY (`ID_Doctor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
--- Volcando datos para la tabla heartalertdb.doctor: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla heartalertdb.doctor: ~6 rows (aproximadamente)
+INSERT INTO `doctor` (`ID_Doctor`, `nombre_doctor`, `apellido_doctor`, `especialidad`, `Verificacion_ID`) VALUES
+	(1, 'Mariana', 'Ríos', 'Cardiología', 'VRF001'),
+	(2, 'Enrique', 'Salazar', 'Neurología', 'VRF002'),
+	(3, 'Julia', 'Méndez', 'Medicina Interna', 'VRF003'),
+	(4, 'Carlos', 'Luna', 'Pediatría', 'VRF004'),
+	(5, 'Ana', 'Gómez', 'Geriatría', 'VRF005'),
+	(6, 'Tilinazo', 'Vargas', 'Geyologia', '1234');
 
 -- Volcando estructura para tabla heartalertdb.electrocardiograma
 CREATE TABLE IF NOT EXISTS `electrocardiograma` (
-  `ID_Lectura` int(11) NOT NULL,
+  `ID_Lectura` int(11) NOT NULL AUTO_INCREMENT,
   `COD_Paciente` int(11) NOT NULL,
   `tiempo_actual` datetime NOT NULL,
   `frecuencia_cardiaca` int(11) NOT NULL,
@@ -78,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `historial` (
 
 -- Volcando estructura para tabla heartalertdb.pacientes
 CREATE TABLE IF NOT EXISTS `pacientes` (
-  `ID_Paciente` int(11) NOT NULL,
+  `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_paciente` varchar(20) DEFAULT NULL,
   `apellido_paciente` varchar(20) DEFAULT NULL,
   `cedula_paciente` varchar(20) DEFAULT NULL,
@@ -96,10 +103,8 @@ CREATE TABLE IF NOT EXISTS `pacientes` (
 
 -- Volcando estructura para tabla heartalertdb.pacientes_doctor
 CREATE TABLE IF NOT EXISTS `pacientes_doctor` (
-  `ID_Asignacion` int(11) NOT NULL,
   `COD_Paciente` int(11) NOT NULL,
   `COD_Doctor` int(11) NOT NULL,
-  PRIMARY KEY (`ID_Asignacion`),
   KEY `COD_Paciente` (`COD_Paciente`),
   KEY `COD_Doctor` (`COD_Doctor`),
   CONSTRAINT `pacientes_doctor_ibfk_1` FOREIGN KEY (`COD_Paciente`) REFERENCES `pacientes` (`ID_Paciente`),
@@ -110,20 +115,36 @@ CREATE TABLE IF NOT EXISTS `pacientes_doctor` (
 
 -- Volcando estructura para tabla heartalertdb.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `ID_Usuario` int(11) NOT NULL,
+  `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT,
   `COD_Doctor` int(11) NOT NULL,
   `nombre_usuario` varchar(20) NOT NULL,
   `contrasenia` varchar(20) NOT NULL,
   PRIMARY KEY (`ID_Usuario`),
   KEY `COD_Doctor` (`COD_Doctor`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`COD_Doctor`) REFERENCES `doctor` (`ID_Doctor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
--- Volcando datos para la tabla heartalertdb.usuarios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla heartalertdb.usuarios: ~15 rows (aproximadamente)
+INSERT INTO `usuarios` (`ID_Usuario`, `COD_Doctor`, `nombre_usuario`, `contrasenia`) VALUES
+	(1, 1, 'jose_medico', 'password123'),
+	(2, 2, 'laura_doc', 'segura456'),
+	(3, 3, 'daniela123', 'clave789'),
+	(4, 4, 'mario_pediatra', 'mariopass'),
+	(5, 5, 'sofia_cardio', 'sofiastrong'),
+	(6, 1, 'jose_medico', 'password123'),
+	(7, 2, 'laura_doc', 'segura456'),
+	(8, 3, 'daniela123', 'clave789'),
+	(9, 4, 'mario_pediatra', 'mariopass'),
+	(10, 5, 'sofia_cardio', 'sofiastrong'),
+	(11, 1, 'jose_medico', 'password123'),
+	(12, 2, 'laura_doc', 'segura456'),
+	(13, 3, 'daniela123', 'clave789'),
+	(14, 4, 'mario_pediatra', 'mariopass'),
+	(15, 5, 'sofia_cardio', 'sofiastrong');
 
 -- Volcando estructura para tabla heartalertdb.usuario_google
 CREATE TABLE IF NOT EXISTS `usuario_google` (
-  `ID_UsuarioGoogle` int(11) NOT NULL,
+  `ID_UsuarioGoogle` int(11) NOT NULL AUTO_INCREMENT,
   `COD_Doctor` int(11) NOT NULL,
   `email` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ID_UsuarioGoogle`),
