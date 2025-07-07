@@ -30,11 +30,14 @@ def create_lectura(lectura: Electrocardiograma):
         insert_stmt = electrocardiograma.insert().values(**lectura.dict(exclude_unset=True))
         result = conn.execute(insert_stmt)
         conn.commit()
+        # Obtener el nuevo ID insertado
         new_id = result.inserted_primary_key[0]
-        result = conn.execute(
+        result_select = conn.execute(
             electrocardiograma.select().where(electrocardiograma.c.ID_Lectura == new_id)
         ).first()
-        return Electrocardiograma(**dict(result._mapping))
+        if not result_select:
+            raise HTTPException(status_code=500, detail="No se pudo crear la lectura")
+        return Electrocardiograma(**dict(result_select._mapping))
 
 @electroCardiograma_route.put("/{lectura_id}", response_model=Electrocardiograma)
 def update_lectura(lectura_id: int, lectura: Electrocardiograma):

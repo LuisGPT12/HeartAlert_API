@@ -72,17 +72,3 @@ def delete_asignacion(cod_paciente: int, cod_doctor: int):
             raise HTTPException(status_code=404, detail="Asignación no encontrada")
         conn.commit()
         return None
-
-@pacientes_doctor_route.get("/por_doctor/{cod_doctor}", response_model=List[Dict[str, Any]])
-def get_pacientes_por_doctor(cod_doctor: int):
-    with engine.connect() as conn:
-        join_stmt = pacientes_doctor.join(
-            tabla_pacientes, pacientes_doctor.c.COD_Paciente == tabla_pacientes.c.ID_Paciente
-        )
-        query = (
-            pacientes_doctor.select()
-            .select_from(join_stmt)
-            .where(pacientes_doctor.c.COD_Doctor == cod_doctor)
-        )
-        result = conn.execute(query).fetchall()
-        return [dict(row._mapping) for row in result]
