@@ -2,7 +2,7 @@ import os
 from sqlalchemy import create_engine, MetaData, Table
 
 # Configuración de la conexión a la base de datos
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:1234@127.0.0.1:3306/heartalertdb")
+DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:12345@127.0.0.1:3306/heartalertdb")
 
 # Crear el motor de la base de datos
 engine = create_engine(DATABASE_URL, echo=True)  # Cambiar a False en producción
