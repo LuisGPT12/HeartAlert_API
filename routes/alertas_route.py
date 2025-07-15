@@ -14,15 +14,15 @@ def get_alertas():
         result = conn.execute(alertas.select()).fetchall()
         return [Alerta(**dict(row._mapping)) for row in result]
 
-@alerta_router.get("/{alerta_id}", response_model=Alerta)
-def get_alerta(alerta_id: int):
+@alerta_router.get("/{paciente_id}", response_model=List[Alerta])
+def get_alertas_by_paciente(paciente_id: int):
     with engine.connect() as conn:
         result = conn.execute(
-            alertas.select().where(alertas.c.ID_Alerta == alerta_id)
-        ).first()
+            alertas.select().where(alertas.c.COD_Paciente == paciente_id)
+        ).fetchall()
         if not result:
-            raise HTTPException(status_code=404, detail="Alerta no encontrada")
-        return Alerta(**dict(result._mapping))
+            raise HTTPException(status_code=404, detail="No se encontraron alertas para este paciente")
+        return [Alerta(**dict(row._mapping)) for row in result]
 
 @alerta_router.post("/", response_model=Alerta, status_code=201)
 def create_alerta(alerta: Alerta):
