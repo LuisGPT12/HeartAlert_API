@@ -7,6 +7,7 @@ from routes.usuario_google_route import usuarioGoogle_route
 from routes.pacientes_route import paciente_route
 from routes.alertas_route import alerta_router
 from routes.electrocardiograma_router import electroCardiograma_route
+from routes.video_route import video_route
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ app.include_router(usuarioGoogle_route, tags=["usuariosGoogle"])
 app.include_router(paciente_route, tags=["pacientes_doctor"])
 app.include_router(alerta_router, tags=["alertas"])
 app.include_router(electroCardiograma_route, tags=["alertas"])
+app.include_router(video_route, tags=["video"])
 
 if __name__ == "__main__":
     import uvicorn
